@@ -36,11 +36,17 @@ const asyncIncrementor = ((count = 0) => () => ++count)();
 const createIncrementer = () => {};
 
 // return same argument not earlier than in one second, and not later, than in two
-const returnBackInSecond = () => {};
-const getDeepPropertiesCount = () => {};
-const createSerializedObject = () => {};
-const toBuffer = () => {};
-const sortByProto = () => {};
+const returnBackInSecond = (el) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(el), 1000);
+    });
+};
+
+const getDeepPropertiesCount = () => { };
+
+const createSerializedObject = () => null;
+
+const sortByProto = (arr) => arr.sort((a, b) => a.__proto__ - b.__proto__);
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
