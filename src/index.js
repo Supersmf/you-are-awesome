@@ -13,16 +13,11 @@ const createNotEnumerableProperty = (e) => {
 
 
 const createProtoMagicObject = () => {
-    let res = Object.create(Object);
-    res.__proto__ = res.protorype;
-    return res;
+    let func = new Function();
+    func.__proto__ = func.prototype;
+    return func;
 };
 
-//const magicObj = createProtoMagicObject();
-
-//console.log(typeof magicObj); //, 'object');
-//console.log(magicObj.__proto__); //, magicObj.prototype);
-//console.log(magicObj.prototype); //, magicObj.prototype);
 
 const incrementor = () => {
     incrementor.valueOf = () => incrementor.result;
@@ -33,7 +28,11 @@ const incrementor = () => {
 const asyncIncrementor = ((count = 0) => () => ++count)();
 
 
-const createIncrementer = () => {};
+const createIncrementer = function* (count = 0) {
+    while (true) {
+        yield ++count;
+    }
+};
 
 // return same argument not earlier than in one second, and not later, than in two
 const returnBackInSecond = (el) => {
@@ -42,11 +41,13 @@ const returnBackInSecond = (el) => {
     });
 };
 
-const getDeepPropertiesCount = () => { };
+const getDeepPropertiesCount = (obj) => {
+    return JSON.stringify(obj).split('{').length - 2;
+};
 
 const createSerializedObject = () => null;
 
-const sortByProto = (arr) => arr.sort((a, b) => a.__proto__ - b.__proto__);
+const sortByProto = arr => arr.sort((a, b) => a - b);
 
 exports.createEnumerableProperty = createEnumerableProperty;
 exports.createNotEnumerableProperty = createNotEnumerableProperty;
